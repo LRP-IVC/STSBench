@@ -1,0 +1,11 @@
+matplotlib==3.5.3
+numpy==1.26.4
+nuscenes_devkit==1.1.11
+prompt_toolkit==3.0.50
+pyquaternion==0.9.9
+SQLAlchemy==2.0.40
+tqdm==4.67.1
+rerun-sdk==0.22.1
+fpsample==0.3.3
+pandas==2.2.3
+easydict==1.13
