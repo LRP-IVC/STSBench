@@ -22,7 +22,7 @@ pip install -r requirements
 
 # STSnu Dataset Generation
 
-STSBench extracts scenarios from the nuScenes dataset and subsequently derives multiple-choice questions. This process involves the following steps:
+STSBench extracts scenarios from the [nuScenes](https://arxiv.org/pdf/1903.11027) dataset and subsequently derives multiple-choice questions. This process involves the following steps:
 
 ## Preparing nuScenes Data
 
@@ -58,42 +58,42 @@ Our verification tool is built using [rerun](https://github.com/rerun-io/rerun) 
   <img src="docs/images/anno_fr1_rerun.png" alt="STSBench rerun scene visualisation" width="49%">
 </p>
 
-### VQA Generation
+### Model Prompt Generation
 Since different methods require different prompt styles and referals, we provide scripts to generate the prompts for every method we evaluated in the paper.
 
-#### Hugging Face
+#### [Hugging Face](https://huggingface.co/datasets/ivc-lrp/STSBench)
 
 ```bash
 python -m vqa_extractor.hf --db_path nuScenes.db --save_path STSnu.json
 ```
 
-#### LLM (Llama 3.2, DeepSeek V3, GPT-4o)
+#### LLM ([Llama 3.2](https://www.llama.com/), [DeepSeek V3](https://arxiv.org/pdf/2412.19437), [GPT-4o](https://arxiv.org/pdf/2303.08774))
 
 ```bash
 python -m vqa_extractor.llm --db_path nuScenes.db --save_path STSnu.json
 ```
 
-#### InternVL 2.5
+#### [InternVL 2.5](https://arxiv.org/pdf/2312.14238)
 ```bash
 python -m vqa_extractor.internvl --db_path nuScenes.db --save_path STSnu.json
 ```
 
-#### Qwen2.5-VL 
+#### [Qwen2.5-VL](https://arxiv.org/pdf/2412.15115)
 ```bash
 python -m vqa_extractor.qwen --db_path nuScenes.db --save_path STSnu.json
 ```
 
-#### Senna-VLM
+#### [Senna-VLM](https://arxiv.org/pdf/2410.22313)
 ```bash
 python -m vqa_extractor.senna --db_path nuScenes.db --save_path STSnu.json
 ```
 
-#### OmniDrive
+#### [OmniDrive](https://arxiv.org/pdf/2405.01533)
 ```bash
 python -m vqa_extractor.omnidrive --db_path nuScenes.db --save_path STSnu.json
 ```
 
-#### DriveMM
+#### [DriveMM](https://arxiv.org/pdf/2412.07689)
 ```bash
 python -m vqa_extractor.drivemm --db_path nuScenes.db --save_path STSnu.json
 ```
