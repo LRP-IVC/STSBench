@@ -1,5 +1,11 @@
 # STSBench: A Spatio-temporal Scenario Benchmark for Multi-modal Large Language Models in Autonomous Driving
 
+<div align="left">
+    <a href="https://huggingface.co/datasets/ivc-lrp/STSBench" target="_blank">
+        <img src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Dataset-blue" alt="Hugging Face">
+    </a>
+</div>
+
 
 <details>
   <summary>Abstract</summary>
