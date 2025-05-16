@@ -1,7 +1,10 @@
 # STSBench: A Spatio-temporal Scenario Benchmark for Multi-modal Large Language Models in Autonomous Driving
 
-We introduce STSBench, a scenario-based framework to benchmark the holistic understanding of vision-language models (VLMs) for autonomous driving. The framework automatically mines pre-defined traffic scenarios from any dataset using ground-truth annotations, provides an intuitive user interface for efficient human verification, and generates multiple-choice questions for model evaluation. Applied to the nuScenes dataset, we present STSBench, the first benchmark that evaluates the spatio-temporal reasoning capabilities of VLMs based on comprehensive 3D perception.  Existing benchmarks typically target off-the-shelf or fine-tuned VLMs for images or videos from a single viewpoint and focus on semantic tasks such as object recognition, captioning, risk assessment, or scene understanding. In contrast, STSBench evaluates driving expert VLMs for end-to-end driving, operating on videos from multi-view cameras or LiDAR. It specifically assesses their ability to reason about both ego-vehicle actions and complex interactions among traffic participants, a crucial capability for autonomous vehicles. The benchmark features 43 diverse scenarios spanning multiple views and frames, resulting in 971 human-verified multiple-choice questions. A thorough evaluation uncovers critical shortcomings in existing models’ ability to reason about fundamental traffic dynamics in complex environments. These findings highlight the urgent need for architectural advances that explicitly model spatio-temporal reasoning. By addressing a core gap in spatio-temporal evaluation, STSBench enables the development of more robust and explainable VLMs for autonomous driving.
 
+<details>
+  <summary>Abstract</summary>
+We introduce STSBench, a scenario-based framework to benchmark the holistic understanding of vision-language models (VLMs) for autonomous driving. The framework automatically mines pre-defined traffic scenarios from any dataset using ground-truth annotations, provides an intuitive user interface for efficient human verification, and generates multiple-choice questions for model evaluation. Applied to the nuScenes dataset, we present STSBench, the first benchmark that evaluates the spatio-temporal reasoning capabilities of VLMs based on comprehensive 3D perception.  Existing benchmarks typically target off-the-shelf or fine-tuned VLMs for images or videos from a single viewpoint and focus on semantic tasks such as object recognition, captioning, risk assessment, or scene understanding. In contrast, STSBench evaluates driving expert VLMs for end-to-end driving, operating on videos from multi-view cameras or LiDAR. It specifically assesses their ability to reason about both ego-vehicle actions and complex interactions among traffic participants, a crucial capability for autonomous vehicles. The benchmark features 43 diverse scenarios spanning multiple views and frames, resulting in 971 human-verified multiple-choice questions. A thorough evaluation uncovers critical shortcomings in existing models’ ability to reason about fundamental traffic dynamics in complex environments. These findings highlight the urgent need for architectural advances that explicitly model spatio-temporal reasoning. By addressing a core gap in spatio-temporal evaluation, STSBench enables the development of more robust and explainable VLMs for autonomous driving.
+</details>
 
 # Installation
 Install the requirements:
@@ -44,6 +47,11 @@ python verify.py --dataroot <path to>/nuscenes/v1.0-trainval/ --db_path nuScenes
 
 Our verification tool is built using [rerun](https://github.com/rerun-io/rerun) for visualization. An example of a verification scenario looks like:
 
+<p align="center">
+  <img src="docs/images/anno_fr1_gui.png" alt="STSBench GUI" width="49%">
+  <img src="docs/images/anno_fr1_rerun.png" alt="STSBench rerun scene visualisation" width="49%">
+</p>
+
 ### VQA Generation
 Since different methods require different prompt styles and referals, we provide scripts to generate the prompts for every method we evaluated in the paper.
 
@@ -83,3 +91,4 @@ python -m vqa_extractor.omnidrive --db_path nuScenes.db --save_path STSnu.json
 ```bash
 python -m vqa_extractor.drivemm --db_path nuScenes.db --save_path STSnu.json
 ```
+
