@@ -98,3 +98,54 @@ python -m vqa_extractor.omnidrive --db_path nuScenes.db --save_path STSnu.json
 python -m vqa_extractor.drivemm --db_path nuScenes.db --save_path STSnu.json
 ```
 
+### Inference and Evaluation
+In the following we show how we infer different models (LLMs, VLMs, and expert models) and compute the evaluation. These scripts can be used to reproduce the paper results.
+
+#### [Llama 3.2](https://www.llama.com/)
+
+We self-host [Llama 3.2](https://ollama.com/library/llama3.2) using [Ollama](https://ollama.com/). Please follow the Ollama [installation guide](https://ollama.com/download) and start LLama 3.2 with:
+```bash
+ollama run llama3.2
+```
+Start inference and consequently evaluation with:
+```bash
+python -m eval.llama \
+    --input_path STSnu_llama_3_2.json \
+    --output_path STSnu_llama_3_2_out.json \
+    --db_path nuScenes.db \
+    --openai_base_url "http://localhost:11434/v1"
+```
+
+#### [DeepSeek V3](https://arxiv.org/pdf/2412.19437)
+We utilize [DeepSeek API](https://api-docs.deepseek.com/) to infer DeepSeek and with the results compute the evaluation:
+```bas
+python -m eval.deepseek \
+    --input_path STSnu_DeepSeek.json \
+    --output_path STSnu_DeepSeek_out.json \
+    --db_path nuScenes.db
+```
+
+#### [GPT-4o](https://arxiv.org/pdf/2303.08774)
+
+Similarly, we utilize [OpenAI API](https://openai.com/api/) to infer GPT-4o and with the results compute the evaluation:
+```bash
+python -m eval.gpt \
+    --input_path STSnu_GPT.json \
+    --output_path STSnu_GPT_out.json \
+    --db_path nuScenes.db
+```
+
+#### VLMs: [InternVL 2.5](https://arxiv.org/pdf/2312.14238) & [Qwen2.5-VL](https://arxiv.org/pdf/2412.15115)
+For the VLMs we utilized [LMDeploy](https://github.com/InternLM/lmdeploy?tab=readme-ov-file). Please follow [intallation guide](https://github.com/InternLM/lmdeploy/blob/main/docs/en/get_started/installation.md) to get started.
+
+The following script runs inference (uncomment the wanted model) and computes the evaluation:
+```bash
+# export MODEL="OpenGVLab/InternVL2_5-1B"
+# export MODEL="Qwen/Qwen2.5-VL-7B-Instruct"
+export MODEL="OpenGVLab/InternVL2_5-8B"
+python -m eval.vlm \
+    --input_path STSnu_${MODEL}.json \
+    --output_path STSnu_${MODEL}_out.json \
+    --model ${MODEL} \
+    --db_path nuScenes.db
+```
