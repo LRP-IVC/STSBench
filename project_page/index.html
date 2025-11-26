@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="STSBench: A Spatio-temporal Scenario Benchmark for Multi-modal Large Language Models in Autonomous Driving">
+  <meta name="description" content="STSBench tests VLMs on driving scenarios, revealing critical gaps in spatio-temporal reasoning essential for complex traffic dynamics.">
+  <meta name="keywords" content="STSBench, autonomous driving, vision-language models, spatio-temporal reasoning, benchmark, traffic scenarios, 3D perception, multi-view video, LiDAR, end-to-end driving">
+  <meta name="author" content="Christian Fruhwirth-Reisinger, Dusan Malic, Wei Lin, David Schinagl, Samuel Schulter, Horst Possegger">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Institute of Visual Computing, Graz University of Technology">
+  <meta property="og:title" content="STSBench: A Spatio-temporal Scenario Benchmark for Multi-modal Large Language Models in Autonomous Driving">
+  <meta property="og:description" content="STSBench tests VLMs on driving scenarios, revealing critical gaps in spatio-temporal reasoning essential for complex traffic dynamics.">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="STSBench: A Spatio-temporal Scenario Benchmark for Multi-modal Large Language Models in Autonomous Driving - Research Preview">
+  <meta property="article:published_time" content="2025-11-23T12:18:00.000Z">
+  <meta property="article:author" content="Christian Fruhwirth-Reisinger, Dusan Malic">
+  <meta property="article:section" content="Research">
+  <meta property="article:tag" content="autonomous driving">
+  <meta property="article:tag" content="benchmark">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title" content="STSBench: A Spatio-temporal Scenario Benchmark for Multi-modal Large Language Models in Autonomous Driving">
+  <meta name="citation_author" content="Fruhwirth-Reisinger, Christian">
+  <meta name="citation_author" content="Malic, Dusan">
+  <meta name="citation_publication_date" content="2025">
+  <meta name="citation_conference_title" content="Conference on Neural Information Processing Systems (NeurIPS)">
+  <meta name="citation_pdf_url" content="https://arxiv.org/pdf/2506.06218">
+  
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#2563eb">
+  <meta name="msapplication-TileColor" content="#2563eb">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  
+  <!-- Preconnect for performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://ajax.googleapis.com">
+  <link rel="preconnect" href="https://documentcloud.adobe.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
+
+  <title>STSBench: A Spatio-temporal Scenario Benchmark for Multi-modal Large Language Models in Autonomous Driving - Christian Fruhwirth-Reisinger, Dušan Malić, Wei Lin, David Schinagl, Samuel Schulter, Horst Possegger | Academic Research</title>
+  
+  <!-- Favicon and App Icons -->
+  <link rel="icon" type="image/x-icon" href="static/images/stsbench_ico.ico">
+  <link rel="apple-touch-icon" href="static/images/stsbench_ico.ico">
+  
+  <!-- Critical CSS - Load synchronously -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  
+  <!-- Non-critical CSS - Load asynchronously -->
+  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  </noscript>
+  
+  <!-- Fonts - Optimized loading -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Defer non-critical JavaScript -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <!-- Structured Data for Academic Papers -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "STSBench: A Spatio-temporal Scenario Benchmark for Multi-modal Large Language Models in Autonomous Driving",
+    "description": "STSBench tests VLMs on driving scenarios, revealing critical gaps in spatio-temporal reasoning essential for complex traffic dynamics.",
+    "author": [
+      {
+        "@type": "Person",
+        "name": "Christian Fruhwirth-Reisinger",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Institute of Visual Computing, Graz University of Technology"
+        }
+      },
+      {
+        "@type": "Person",
+        "name": "Dusan Malic",
+        "affiliation": {
+          "@type": "Organization",
+          "name": "Institute of Visual Computing, Graz University of Technology"
+        }
+      }
+    ],
+    "datePublished": "2025-06-06",
+    "publisher": {
+      "@type": "Organization",
+      "name": " NeurIPS 2025"
+    },
+    "keywords": ["STSBench", "autonomous driving", "vision-language models", "spatio-temporal reasoning", "benchmark", "traffic scenarios", "3D perception", "multi-view video", "LiDAR", "end-to-end driving]"]
+    "abstract": "We introduce STSBench, a scenario-based framework to benchmark the holistic understanding of vision-language models (VLMs) for autonomous driving. The framework automatically mines pre-defined traffic scenarios from any dataset using ground-truth annotations, provides an intuitive user interface for efficient human verification, and generates multiple-choice questions for model evaluation. Applied to the NuScenes dataset, we present STSnu, the first benchmark that evaluates the spatio-temporal reasoning capabilities of VLMs based on comprehensive 3D perception. Existing benchmarks typically target off-the-shelf or fine-tuned VLMs for images or videos from a single viewpoint and focus on semantic tasks such as object recognition, dense captioning, risk assessment, or scene understanding. In contrast, STSnu evaluates driving expert VLMs for end-to-end driving, operating on videos from multi-view cameras or LiDAR. It specifically assesses their ability to reason about both ego-vehicle actions and complex interactions among traffic participants, a crucial capability for autonomous vehicles. The benchmark features 43 diverse scenarios spanning multiple views and frames, resulting in 971 human-verified multiple-choice questions. A thorough evaluation uncovers critical shortcomings in existing models' ability to reason about fundamental traffic dynamics in complex environments. These findings highlight the urgent need for architectural advances that explicitly model spatio-temporal reasoning. By addressing a core gap in spatio-temporal evaluation, STSBench enables the development of more robust and explainable VLMs for autonomous driving.",
+    "citation": "@inproceedings{neurips2025stsbench, title={{STSBench: A Spatio-temporal Scenario Benchmark for Multi-modal Large Language Models in Autonomous Driving}}, author={Fruhwirth-Reisinger, Christian and Mali{\'c}, Du{\v{s}}an and Lin, Wei and Schinagl, David and Schulter, Samuel and Possegger, Horst}, booktitle={In Proceedings of the Conference on Neural Information Processing Systems}, year={2025}",
+    "isAccessibleForFree": true,
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "about": [
+      {
+        "@type": "Thing",
+        "name": "Autonomous Driving"
+      },
+      {
+        "@type": "Thing", 
+        "name": "Computer Vision"
+      }
+    ]
+  }
+  </script>
+  
+  <!-- Website/Organization Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Institute of Visual Computing, Graz University of Technology",
+    "url": "https://ivc.tugraz.at/",
+    "logo": "https://ivc.tugraz.at/wp-content/uploads/tu-ivc-logo-small-768x263.png",
+  }
+  </script>
+</head>
+<body>
+
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- More Works Dropdown -->
+  <div class="more-works-container">
+    <button class="more-works-btn" onclick="toggleMoreWorks()" title="View More Works from Our Lab">
+      <i class="fas fa-flask"></i>
+      More Works
+      <i class="fas fa-chevron-down dropdown-arrow"></i>
+    </button>
+    <div class="more-works-dropdown" id="moreWorksDropdown">
+      <div class="dropdown-header">
+        <h4>More Works from Our Lab</h4>
+        <button class="close-btn" onclick="toggleMoreWorks()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="works-list">
+        <a href="https://openaccess.thecvf.com/content/CVPR2025/papers/Malic_GBlobs_Explicit_Local_Structure_via_Gaussian_Blobs_for_Improved_Cross-Domain_CVPR_2025_paper.pdf" class="work-item" target="_blank">
+          <div class="work-info">
+            <h5>GBlobs: Explicit Local Structure via Gaussian Blobs for Improved Cross-Domain LiDAR-based 3D Object Detection</h5>
+            <p>Parameter-free method that enhances Domain Generalization in LiDAR-based 3D detection by encoding explicit local point cloud structure via Gaussian blobs to mitigate reliance on global geometry</p>
+            <span class="work-venue">Conference/Journal 2024</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <a href="https://openaccess.thecvf.com/content/CVPR2025/papers/Malic_LiSu_A_Dataset_and_Method_for_LiDAR_Surface_Normal_Estimation_CVPR_2025_paper.pdf" class="work-item" target="_blank">
+          <div class="work-info">
+            <h5>LiSu: A Dataset and Method for LiDAR Surface Normal Estimation</h5>
+            <p>Addresses the scarcity of data and robust methods for LiDAR surface normal estimation by introducing LiSu, the first large-scale synthetic dataset with ground truth annotations, alongside a novel spatiotemporal regularization technique.</p>
+            <span class="work-venue">CVPR 2025</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <a href="https://arxiv.org/pdf/2408.03790" class="work-item" target="_blank">
+          <div class="work-info">
+            <h5>Vision-Language Guidance for LiDAR-based Unsupervised 3D Object Detection</h5>
+            <p>Proposes a novel vision-language-guided unsupervised 3D detection approach that operates exclusively on LiDAR point clouds.</p>
+            <span class="work-venue">BMVC 2024</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">STSBench: A Spatio-temporal Scenario Benchmark for Multi-modal Large Language Models in Autonomous Driving</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://chreisinger.github.io/" target="_blank">Christian Fruhwirth-Reisinger</a><sup>1,2,*</sup>,</span>
+                <span class="author-block">
+                  <a href="https://www.linkedin.com/in/dusanm/" target="_blank">Dušan Malić</a><sup>1,2,*</sup>,</span>
+                  <span class="author-block">
+                    <a href="https://wlin-at.github.io/" target="_blank">Wei Lin</a><sup>3</sup>,</span>
+                  <span class="author-block">
+                    <a href="https://dschinagl.github.io/" target="_blank">David Schinagl</a><sup>1</sup>,</span>
+                  <span class="author-block">
+                    <a href="https://samschulter.github.io/" target="_blank">Samuel Schulter</a><sup>4,&dagger;</sup>,</span>
+                  <span class="author-block">
+                    <a href="https://snototter.github.io/" target="_blank">Horst Possegger </a><sup>1,2</sup></span>
+                  </span>
+                  </div>
+
+                  <div class="is-size-5 publication-authors">
+                    <span class="author-block">
+                            <sup>1</sup>Institute of Visual Computing, Graz University of Technology <br>
+                            <sup>2</sup>Christian Doppler Laboratory for Embedded Machine Learnin <br>
+                            <sup>3</sup>Institute for Machine Learning, Johannes Kepler University Linz <br>
+                            <sup>4</sup>Amazon <br>
+                            NeurIPS 2025
+                    </span>
+                    <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
+                    <span class="eql-cntrb"><small><br><sup>&dagger;</sup>This work is independent of the author’s employment at Amazon</small></span>
+                  </div>
+
+                  <div class="column has-text-centered">
+                    <div class="publication-links">
+                      <span class="link-block">
+                        <a href="https://arxiv.org/pdf/2506.06218.pdf" target="_blank"
+                        class="external-link button is-normal is-rounded is-dark">
+                        <span class="icon">
+                          <i class="fas fa-file-pdf"></i>
+                        </span>
+                        <span>Paper</span>
+                      </a>
+                    </span>
+
+                  <span class="link-block">
+                    <a href="https://github.com/LRP-IVC/STSBench" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+
+                  <span class="link-block">
+                    <a href="https://huggingface.co/datasets/ivc-lrp/STSBench" target="_blank"
+                    class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                            &#129303;
+                    </span>
+                    <span>Dataset</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="https://arxiv.org/pdf/2506.06218.pdf" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-centered">
+        <h2 class="title is-3">TL;DR</h2>
+        </div>
+        <div class="content has-text-justified">
+        STSBench a new framework for benchmarking Vision-Language Models (VLMs) in autonomous driving. STSBench uses multi-view videos and LiDAR to test spatio-temporal reasoning and complex traffic interactions. Evaluations using 971 human-verified questions revealed that current models struggle significantly with fundamental traffic dynamics, highlighting an urgent need for better model architectures.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container has-text-centered">
+        <h2 class="title is-3">Scenario Prompt</h2>
+    <div class="columns is-centered has-text-centered">
+
+
+    <div class="column">
+        <iframe src="https://app.rerun.io/version/0.22.1/?url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/ego_waiting_ped_cross.rrd&url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/stsbench_annotator.rbl" height="640" width="100%"></iframe>
+        <h2 class="subtitle has-text-centered">
+        Ego waiting pedestrian to cross
+        </h2>
+    </div>
+
+    <div class="column is-one-fifth">
+
+    <div class="content-box is-rounded-all has-icon-corner has-text-left mb-4">
+      <div class="icon-placeholder p-1" id="icon_user">
+        <img src="static/images/user_typing.png" alt="User prompt" loading="lazy"/>
+      </div>
+      <p class="is-marginless" id="txt_user"></p>
+    </div>
+
+    <div class="content-box is-rounded-all has-icon-corner has-text-left mb-4">
+              <a href="https://chatgpt.com/" target="_blank">
+      <div class="icon-placeholder" id="icon_gpt">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" class="icon-lg"><path d="M11.2475 18.25C10.6975 18.25 10.175 18.1455 9.67999 17.9365C9.18499 17.7275 8.74499 17.436 8.35999 17.062C7.94199 17.205 7.50749 17.2765 7.05649 17.2765C6.31949 17.2765 5.63749 17.095 5.01049 16.732C4.38349 16.369 3.87749 15.874 3.49249 15.247C3.11849 14.62 2.93149 13.9215 2.93149 13.1515C2.93149 12.8325 2.97549 12.486 3.06349 12.112C2.62349 11.705 2.28249 11.2375 2.04049 10.7095C1.79849 10.1705 1.67749 9.6095 1.67749 9.0265C1.67749 8.4325 1.80399 7.8605 2.05699 7.3105C2.30999 6.7605 2.66199 6.2875 3.11299 5.8915C3.57499 5.4845 4.10849 5.204 4.71349 5.05C4.83449 4.423 5.08749 3.862 5.47249 3.367C5.86849 2.861 6.35249 2.465 6.92449 2.179C7.49649 1.893 8.10699 1.75 8.75599 1.75C9.30599 1.75 9.82849 1.8545 10.3235 2.0635C10.8185 2.2725 11.2585 2.564 11.6435 2.938C12.0615 2.795 12.496 2.7235 12.947 2.7235C13.684 2.7235 14.366 2.905 14.993 3.268C15.62 3.631 16.1205 4.126 16.4945 4.753C16.8795 5.38 17.072 6.0785 17.072 6.8485C17.072 7.1675 17.028 7.514 16.94 7.888C17.38 8.295 17.721 8.768 17.963 9.307C18.205 9.835 18.326 10.3905 18.326 10.9735C18.326 11.5675 18.1995 12.1395 17.9465 12.6895C17.6935 13.2395 17.336 13.718 16.874 14.125C16.423 14.521 15.895 14.796 15.29 14.95C15.169 15.577 14.9105 16.138 14.5145 16.633C14.1295 17.139 13.651 17.535 13.079 17.821C12.507 18.107 11.8965 18.25 11.2475 18.25ZM7.17199 16.1875C7.72199 16.1875 8.20049 16.072 8.60749 15.841L11.7095 14.059C11.8195 13.982 11.8745 13.8775 11.8745 13.7455V12.3265L7.88149 14.62C7.63949 14.763 7.39749 14.763 7.15549 14.62L4.03699 12.8215C4.03699 12.8545 4.03149 12.893 4.02049 12.937C4.02049 12.981 4.02049 13.047 4.02049 13.135C4.02049 13.696 4.15249 14.213 4.41649 14.686C4.69149 15.148 5.07099 15.511 5.55499 15.775C6.03899 16.05 6.57799 16.1875 7.17199 16.1875ZM7.33699 13.498C7.40299 13.531 7.46349 13.5475 7.51849 13.5475C7.57349 13.5475 7.62849 13.531 7.68349 13.498L8.92099 12.7885L4.94449 10.4785C4.70249 10.3355 4.58149 10.121 4.58149 9.835V6.2545C4.03149 6.4965 3.59149 6.8705 3.26149 7.3765C2.93149 7.8715 2.76649 8.4215 2.76649 9.0265C2.76649 9.5655 2.90399 10.0825 3.17899 10.5775C3.45399 11.0725 3.81149 11.4465 4.25149 11.6995L7.33699 13.498ZM11.2475 17.161C11.8305 17.161 12.3585 17.029 12.8315 16.765C13.3045 16.501 13.6785 16.138 13.9535 15.676C14.2285 15.214 14.366 14.697 14.366 14.125V10.561C14.366 10.429 14.311 10.33 14.201 10.264L12.947 9.538V14.1415C12.947 14.4275 12.826 14.642 12.584 14.785L9.46549 16.5835C10.0045 16.9685 10.5985 17.161 11.2475 17.161ZM11.8745 11.122V8.878L10.01 7.822L8.12899 8.878V11.122L10.01 12.178L11.8745 11.122ZM7.05649 5.8585C7.05649 5.5725 7.17749 5.358 7.41949 5.215L10.538 3.4165C9.99899 3.0315 9.40499 2.839 8.75599 2.839C8.17299 2.839 7.64499 2.971 7.17199 3.235C6.69899 3.499 6.32499 3.862 6.04999 4.324C5.78599 4.786 5.65399 5.303 5.65399 5.875V9.4225C5.65399 9.5545 5.70899 9.659 5.81899 9.736L7.05649 10.462V5.8585ZM15.4385 13.7455C15.9885 13.5035 16.423 13.1295 16.742 12.6235C17.072 12.1175 17.237 11.5675 17.237 10.9735C17.237 10.4345 17.0995 9.9175 16.8245 9.4225C16.5495 8.9275 16.192 8.5535 15.752 8.3005L12.6665 6.5185C12.6005 6.4745 12.54 6.458 12.485 6.469C12.43 6.469 12.375 6.4855 12.32 6.5185L11.0825 7.2115L15.0755 9.538C15.1965 9.604 15.2845 9.692 15.3395 9.802C15.4055 9.901 15.4385 10.022 15.4385 10.165V13.7455ZM12.122 5.3635C12.364 5.2095 12.606 5.2095 12.848 5.3635L15.983 7.195C15.983 7.118 15.983 7.019 15.983 6.898C15.983 6.37 15.851 5.8695 15.587 5.3965C15.334 4.9125 14.9655 4.5275 14.4815 4.2415C14.0085 3.9555 13.4585 3.8125 12.8315 3.8125C12.2815 3.8125 11.803 3.928 11.396 4.159L8.29399 5.941C8.18399 6.018 8.12899 6.1225 8.12899 6.2545V7.6735L12.122 5.3635Z"></path></svg>
+      </div>
+              </a>
+      <p id="txt_gpt" class="is-marginless"></p>
+    </div>
+
+    <div class="content-box is-rounded-all has-icon-corner has-text-left mb-4">
+              <a href="https://github.com/OpenGVLab/InternVL" target="_blank">
+      <div class="icon-placeholder p-2" id="icon_internvl">
+        <img src="static/images/internvl_logo.svg" alt="InternVL logo" loading="lazy"/>
+      </div>
+              </a>
+      <p class="is-marginless" id="txt_internvl"></p>
+    </div>
+
+
+    <div class="content-box is-rounded-all has-icon-corner has-text-left mb-4">
+              <a href="https://qwen.ai/home" target="_blank">
+      <div class="icon-placeholder p-1" id="icon_qwen">
+        <img src="static/images/Qwen_logo.svg" alt="Qwen logo" loading="lazy"/>
+      </div>
+              </a>
+      <p class="is-marginless" id="txt_qwen"></p>
+    </div>
+
+
+    <div class="content-box is-rounded-all has-icon-corner has-text-left">
+              <a href="https://github.com/hustvl/Senna" target="_blank">
+      <div class="icon-placeholder p-1" id="icon_senna">
+        <img src="static/images/senna_logo.png" alt="Senna logo" loading="lazy"/>
+      </div>
+              </a>
+      <p class="is-marginless" id="txt_senna"></p>
+    </div>
+
+    </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section hero is-light">
+  <div class="container is-max-desktop has-text-centered">
+        <h2 class="title is-3">Scenario Categories</h2>
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <div class="content has-text-justified">
+        <img src="static/images/stsbench_scenario_categories.png" alt="STSBench scenario categories" loading="lazy"/>
+        STSBench covers common ego-vehicle (blue) actions, e.g., ego lane change and interactions with agents (orange), e.g., ego overtaking agent, important for vehicle control. In addition, to test for complex spatio-temporal understanding, we evaluate agent actions, e.g., agent left turn, and interactions between agents, e.g., agent waiting for pedestrian to cross.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Paper abstract -->
+<!-- <section class="section hero is-light"> -->
+<!--   <div class="container is-max-desktop"> -->
+<!--     <div class="columns is-centered has-text-centered"> -->
+<!--       <div class="column is-four-fifths"> -->
+<!--         <h2 class="title is-3">Abstract</h2> -->
+<!--         <div class="content has-text-justified"> -->
+<!--           <p> -->
+<!--           We introduce STSBench, a scenario-based framework to benchmark the holistic understanding of vision-language models (VLMs) for autonomous driving. The framework automatically mines pre-defined traffic scenarios from any dataset using ground-truth annotations, provides an intuitive user interface for efficient human verification, and generates multiple-choice questions for model evaluation. Applied to the NuScenes dataset, we present STSnu, the first benchmark that evaluates the spatio-temporal reasoning capabilities of VLMs based on comprehensive 3D perception. Existing benchmarks typically target off-the-shelf or fine-tuned VLMs for images or videos from a single viewpoint and focus on semantic tasks such as object recognition, dense captioning, risk assessment, or scene understanding. In contrast, STSnu evaluates driving expert VLMs for end-to-end driving, operating on videos from multi-view cameras or LiDAR. It specifically assesses their ability to reason about both ego-vehicle actions and complex interactions among traffic participants, a crucial capability for autonomous vehicles. The benchmark features 43 diverse scenarios spanning multiple views and frames, resulting in 971 human-verified multiple-choice questions. A thorough evaluation uncovers critical shortcomings in existing models' ability to reason about fundamental traffic dynamics in complex environments. These findings highlight the urgent need for architectural advances that explicitly model spatio-temporal reasoning. By addressing a core gap in spatio-temporal evaluation, STSBench enables the development of more robust and explainable VLMs for autonomous driving. -->
+<!--           </p> -->
+<!--         </div> -->
+<!--       </div> -->
+<!--     </div> -->
+<!--   </div> -->
+<!-- </section> -->
+<!-- End paper abstract -->
+
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3">Mined nuScenes Scenarios</h2>
+      <div id="results-carousel" class="carousel results-carousel">
+
+      <div class="item">
+        <iframe src="https://app.rerun.io/version/0.22.1/?url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/ego_waiting_ped_cross.rrd&url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/stsbench_annotator.rbl" height="640" width="100%"></iframe>
+        <h2 class="subtitle has-text-centered">
+        Ego waiting pedestrian to cross
+        </h2>
+      </div>
+
+       <div class="item">
+        <iframe src="https://app.rerun.io/version/0.22.1/?url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/agent_accelerate.rrd&url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/stsbench_annotator.rbl" height="640" width="100%"></iframe>
+        <h2 class="subtitle has-text-centered">
+        Agent accelrating
+        </h2>
+      </div>
+
+      <div class="item">
+        <iframe src="https://app.rerun.io/version/0.22.1/?url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/agent_ego_overtaking.rrd&url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/stsbench_annotator.rbl" height="640" width="100%"></iframe>
+        <h2 class="subtitle has-text-centered">
+        Agent overtaking ego
+        </h2>
+      </div>
+
+      <div class="item">
+        <iframe src="https://app.rerun.io/version/0.22.1/?url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/agent_jaywalking.rrd&url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/stsbench_annotator.rbl" height="640" width="100%"></iframe>
+        <h2 class="subtitle has-text-centered">
+          Agent jaywalking
+        </h2>
+      </div>
+
+      <div class="item">
+        <iframe src="https://app.rerun.io/version/0.22.1/?url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/agent_reverse.rrd&url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/stsbench_annotator.rbl" height="640" width="100%"></iframe>
+        <h2 class="subtitle has-text-centered">
+        Agent reversing
+        </h2>
+      </div>
+
+      <div class="item">
+        <iframe src="https://app.rerun.io/version/0.22.1/?url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/agent_running.rrd&url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/stsbench_annotator.rbl" height="640" width="100%"></iframe>
+        <h2 class="subtitle has-text-centered">
+        Agent running
+        </h2>
+      </div>
+
+      <div class="item">
+        <iframe src="https://app.rerun.io/version/0.22.1/?url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/agent_stop.rrd&url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/stsbench_annotator.rbl" height="640" width="100%"></iframe>
+        <h2 class="subtitle has-text-centered">
+        Agent stopping
+        </h2>
+      </div>
+
+      <div class="item">
+        <iframe src="https://app.rerun.io/version/0.22.1/?url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/ego_lanechange.rrd&url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/stsbench_annotator.rbl" height="640" width="100%"></iframe>
+        <h2 class="subtitle has-text-centered">
+        Ego changing lane
+        </h2>
+      </div>
+
+      <div class="item">
+        <iframe src="https://app.rerun.io/version/0.22.1/?url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/ego_left_turn.rrd&url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/stsbench_annotator.rbl" height="640" width="100%"></iframe>
+        <h2 class="subtitle has-text-centered">
+        Ego turning left
+        </h2>
+      </div>
+
+      <div class="item">
+        <iframe src="https://app.rerun.io/version/0.22.1/?url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/ego_overtake_agent.rrd&url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/stsbench_annotator.rbl" height="640" width="100%"></iframe>
+        <h2 class="subtitle has-text-centered">
+        Ego overtaking agent
+        </h2>
+      </div>
+
+      <div class="item">
+        <iframe src="https://app.rerun.io/version/0.22.1/?url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/ego_stop.rrd&url=https://raw.githubusercontent.com/malicd/STSnu_Scenarios/master/stsbench_annotator.rbl" height="640" width="100%"></iframe>
+        <h2 class="subtitle has-text-centered">
+        Ego stopping
+        </h2>
+      </div>
+
+  </div>
+</div>
+</div>
+</section>
+
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container is-max-desktop has-text-centered">
+    <h2 class="title is-3">Scenario Statistics</h2>
+        <h3 class="title is-4">Number of Scenarios</h3>
+    <div class="container has-text-left">
+        <img src="static/images/stsbench_number_of_scenarios.png" alt="Scenario statistics" loading="lazy"/>
+        <h2 class="subtitle has-text-left">
+        Number of mined scenarios in total (gray) and the remaining samples (green) after sub-sampling and verification. Scenarios with more than 50 samples (dashed red line) have been sub-sampled considering spatial distribution, occlusion, and distance to the ego-vehicle.
+        </h2>
+      </div>
+      <!-- -->
+      <br><br>
+        <h3 class="title is-4">Number of Scenarios per Category</h3>
+    <div class="container">
+        <img src="static/images/stsbench_number_of_scenarios_per_category.png" alt="Scenario distribution" loading="lazy" width="50%"/>
+      </div>
+</div>
+</div>
+</section>
+
+<section class="hero is-small">
+<div class="hero-body">
+<div class="container is-max-desktop has-text-centered">
+<h2 class="title is-3">Evaluations</h2>
+
+<h3 class="title is-4">Average Performance</h3>
+
+<div class="container has-text-left">
+    <div class="columns is-centered has-text-centered">
+
+    <div class="column">
+        <img src="static/images/bar_average_scores.png" alt="Average scores" loading="lazy" width="70%"/>
+    </div>
+
+</div>
+</div>
+
+<br/>
+
+<h3 class="title is-4">Detailed Performance</h3>
+
+<div class="container has-text-left">
+    <div class="columns is-centered has-text-centered">
+
+    <div class="column">
+        <img src="static/images/radar_LLMs.png" alt="LLM evaluation" loading="lazy"/>
+    </div>
+
+    <div class="column">
+        <img src="static/images/radar_VLMs.png" alt="VLM evaluation" loading="lazy"/>
+    </div>
+
+    <div class="column">
+        <img src="static/images/radar_Driving Expert VLMs.png" alt="Driving experts evaluation" loading="lazy"/>
+    </div>
+</div>
+</div>
+
+</div>
+</section>
+
+
+<!--BibTex citation -->
+  <section class="hero is-small is-light" id="BibTeX">
+    <div class="container is-max-desktop content hero-body">
+      <div class="bibtex-header">
+        <h2 class="title is-3">BibTeX</h2>
+        <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+          <i class="fas fa-copy"></i>
+          <span class="copy-text">Copy</span>
+        </button>
+      </div>
+      <pre id="bibtex-code"><code>@inproceedings{neurips2025stsbench,
+    title={{STSBench: A Spatio-temporal Scenario Benchmark for Multi-modal Large Language Models in Autonomous Driving}},
+    author={Fruhwirth-Reisinger, Christian and Mali{\'c}, Du{\v{s}}an and Lin, Wei and Schinagl, David and Schulter, Samuel and Possegger, Horst},
+    booktitle={In Proceedings of the Conference on Neural Information Processing Systems},
+    year={2025}
+}</code></pre>
+    </div>
+</section>
+<!--End BibTex citation -->
+
+
+  <footer class="footer is-light">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Statcounter tracking code -->
+  
+<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
+
+    <!-- End of Statcounter Code -->
+
+  </body>
+  </html>
