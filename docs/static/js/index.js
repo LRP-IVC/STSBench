@@ -158,7 +158,7 @@ async function startTextAnimation() {
   typeWriter("txt_gpt", "Ego is standing.");
   typeWriter("txt_internvl", "Ego is decelerating.");
   typeWriter("txt_qwen", "Ego is truning left.");
-  typeWriter("txt_senna", "It is a couldy day.");
+  typeWriter("txt_senna", "It is a cloudy day.");
 }
 
 $(document).ready(function() {
